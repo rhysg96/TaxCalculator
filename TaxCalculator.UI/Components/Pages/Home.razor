@@ -1,0 +1,21 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, user!</h1>
+
+<p>Input your annual salary then click "Calculate" to get a breakdown of how much tax you might pay.</p>
+
+<InputNumber @bind-Value="Salary" />
+
+<button @onclick="Calculate">Calculate</button>
+
+
+@code {
+    private decimal Salary { get; set; }
+
+    private void Calculate()
+    {
+        
+    }
+}
