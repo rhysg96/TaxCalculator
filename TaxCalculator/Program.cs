@@ -1,6 +1,4 @@
-using TaxCalculator.UI.Components;
-
-namespace TaxCalculator.UI
+namespace TaxCalculator
 {
     public class Program
     {
@@ -12,14 +10,6 @@ namespace TaxCalculator.UI
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
-            builder.Services.AddHttpClient(
-                "TaxService",
-                client =>
-                {
-                    // Set the base address of the named client.
-                    client.BaseAddress = new Uri("https://localhost:7194");
-                });
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,7 +19,6 @@ namespace TaxCalculator.UI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
 
             app.UseHttpsRedirection();
 
