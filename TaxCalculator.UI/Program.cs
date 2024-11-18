@@ -12,12 +12,13 @@ namespace TaxCalculator.UI
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
+            var taxServiceUrl = builder.Configuration.GetValue<string>("TaxServiceUrl");
             builder.Services.AddHttpClient(
                 "TaxService",
                 client =>
                 {
                     // Set the base address of the named client.
-                    client.BaseAddress = new Uri("https://localhost:7194");
+                    client.BaseAddress = new Uri(taxServiceUrl);
                 });
 
             var app = builder.Build();
