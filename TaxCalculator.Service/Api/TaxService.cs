@@ -72,9 +72,11 @@ namespace TaxCalculator.Service.Api
             var summary = new TaxBreakdownSummary
             {
                 AnnualTax = totalTax,
-                MonthlyTax = totalTax / 12,
+                MonthlyTax = Math.Round(totalTax / 12, 2, MidpointRounding.AwayFromZero),
                 GrossAnnualSalary = salary,
-                GrossMonthlySalary = salary / 12,
+                GrossMonthlySalary = Math.Round(salary / 12, 2, MidpointRounding.AwayFromZero),
+                NetAnnualSalary = salary - totalTax,
+                NetMonthlySalary = Math.Round((salary / 12) - (totalTax / 12), 2, MidpointRounding.AwayFromZero),
                 TaxBreakdowns = taxes.Select(x => new TaxAndBandSummary
                 {
                     Amount = x.TaxAmount,

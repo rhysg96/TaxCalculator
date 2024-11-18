@@ -1,5 +1,12 @@
-﻿@inject IHttpClientFactory ClientFactory
+﻿@using System.Globalization
+@using TaxCalculator.UI.Models
+@inject IHttpClientFactory ClientFactory
+
 @page "/"
+
+<head>
+    <link rel="stylesheet" href="taxCalculator.css" />
+</head>
 
 <PageTitle>Home</PageTitle>
 
@@ -11,9 +18,37 @@
 
 <button @onclick="Calculate">Calculate</button>
 
+<div>
+
+    @if(TaxBreakdown != null)
+    {
+        <dl class="taxBreakdownList">
+            <dt>Gross Annual Salary</dt>
+            <dd>@FormatDecimalCurrency(TaxBreakdown.GrossAnnualSalary)</dd>
+            <dt>Gross Monthly Salary</dt>
+            <dd>@FormatDecimalCurrency(@TaxBreakdown.GrossMonthlySalary)</dd>
+            <dt>Net Annual Salary</dt>
+            <dd>@FormatDecimalCurrency(@TaxBreakdown.NetAnnualSalary)</dd>
+            <dt>Net Monthly Salary</dt>
+            <dd>@FormatDecimalCurrency(@TaxBreakdown.NetMonthlySalary)</dd>
+            <dt>Annual Tax Paid</dt>
+            <dd>@FormatDecimalCurrency(@TaxBreakdown.AnnualTax)</dd>
+            <dt>Monthly Tax Paid</dt>
+            <dd>@FormatDecimalCurrency(@TaxBreakdown.MonthlyTax)</dd>
+        </dl>
+    }
+</div>
 
 @code {
     private decimal Salary { get; set; }
+
+    private TaxBreakdownResponse? TaxBreakdown { get; set;  }
+
+    string FormatDecimalCurrency(decimal value)
+    {
+        var regionCode = "en-GB";
+        return value.ToString("C2", CultureInfo.CreateSpecificCulture(regionCode));
+    }
 
     private async Task Calculate()
     {
@@ -21,6 +56,8 @@
 
         var response = await client.PostAsJsonAsync("/TaxCalculator/GetTaxBreakdown", new { Date = DateTime.Now, Salary });
 
-        var resultText = response.Content.ReadFromJsonAsync<object>();
+        var result = await response.Content.ReadFromJsonAsync<TaxBreakdownResponse>();
+
+        TaxBreakdown = result;
     }
 }

@@ -1,0 +1,7 @@
+﻿.taxBreakdownList dt {
+    color: red;
+}
+
+.taxBreakdownList dd {
+    color: green;
+}

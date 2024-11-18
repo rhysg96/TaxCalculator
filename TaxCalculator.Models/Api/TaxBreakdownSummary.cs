@@ -29,6 +29,16 @@
         public decimal MonthlyTax { get; set; }
 
         /// <summary>
+        /// Salary after taxes
+        /// </summary>
+        public decimal NetAnnualSalary { get; set; }
+        
+        /// <summary>
+        /// Monthly salary after taxes
+        /// </summary>
+        public decimal NetMonthlySalary { get; set; }
+
+        /// <summary>
         /// The tax breakdown per band
         /// </summary>
         public List<TaxAndBandSummary> TaxBreakdowns { get; set; }
